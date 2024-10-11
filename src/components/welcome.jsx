@@ -26,7 +26,7 @@ const Welcome = () => {
           <div className="flex place-content-center mt-8">
             <p>
               Not registered yet?{" "}
-              <Link href="/signUp" className="font-medium text-primary underline">
+              <Link href="/register" className="font-medium text-primary underline">
                 Create an Account
               </Link>
             </p>

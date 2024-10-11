@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 
-
+* {
+  font-family: "Noto Sans Thai";
+}
   
 
   

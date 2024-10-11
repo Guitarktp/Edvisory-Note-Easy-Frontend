@@ -17,6 +17,7 @@ export default function Home() {
   const [hasToken, setHasToken] = useState(false);
   const [sortOption, setSortOption] = useState("dateDesc");
 
+
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
     type: "add",
@@ -41,6 +42,8 @@ export default function Home() {
 
   const sortNotes = (notes, option) => {
     const sortedNotes = [...notes];
+    
+
     if (option === "dateAsc") {
       sortedNotes.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn));
     } else if (option === "dateDesc") {
@@ -105,6 +108,7 @@ export default function Home() {
       {hasToken ? (
         allNotes.length > 0 ? (
           <div className="grid grid-cols-3 gap-4 mt-8">
+            {/* เอา parameter จาก stateข้างบน มาใช้ */}
             {sortNotes(allNotes, sortOption).map((item) => (
               <NoteCard
                 key={item._id}

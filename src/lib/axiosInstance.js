@@ -2,8 +2,6 @@ import axios from "axios";
 
 const PORT = process.env.NEXT_PUBLIC_API_BASE_URL
 
-
-
 const axiosInstance = axios.create({
     baseURL: PORT,  
     timeout: 10000,
@@ -36,6 +34,4 @@ axiosInstance.interceptors.request.use(
     }
   );
   
-  
-
 export default axiosInstance
