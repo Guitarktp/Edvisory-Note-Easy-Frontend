@@ -52,7 +52,7 @@ const Login = () => {
 
             setTimeout(() => {
               window.location.reload();
-            }, 50); 
+            }, 10); 
          
           
           }

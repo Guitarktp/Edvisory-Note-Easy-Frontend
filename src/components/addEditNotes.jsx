@@ -1,9 +1,11 @@
 'use client'
 
+import React from "react";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import DropdownList from "./Dropdown";
 import axiosInstance from "@/lib/axiosInstance";
+import TagInput from "./tagInput";
 
 
 
@@ -11,7 +13,6 @@ const AddEditNotes = ({
   noteData,
   type,
   onClose,
-  showToastMessage,
   getAllNotes,
 }) => {
   const [title, setTitle] = useState(noteData?.title || "");
@@ -33,7 +34,6 @@ const AddEditNotes = ({
 
       // if (response.data && response.data.noteInfo) {
       if (response.data) {
-        showToastMessage("Note Added Successfully");
         getAllNotes();
         onClose();
       }
@@ -66,7 +66,7 @@ const AddEditNotes = ({
       );
 
       if (response.data && response.data.noteInfo) {
-        showToastMessage("Note Updated Successfully", "update");
+        
         getAllNotes();
         onClose();
       }

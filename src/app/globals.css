@@ -19,8 +19,7 @@
       }
     
       .icon-btn {
-        /* @apply text-xl text-slate-300 cursor-pointer hover:text-primary; */
-        @apply text-xl text-slate-300 cursor-pointer ;
+        @apply text-xl text-slate-300 cursor-pointer hover:text-primary;;
       }
     
       .input-label {

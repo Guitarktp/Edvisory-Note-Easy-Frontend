@@ -1,6 +1,10 @@
+
 import { MdClose } from "react-icons/md";
 
 const NoteEditHistory = ({onClose, editHistory}) => {
+
+
+
     return (
     <div className="relative">
       <button
@@ -12,17 +16,18 @@ const NoteEditHistory = ({onClose, editHistory}) => {
 
       <h2 className="text-lg font-bold mb-4">Edit History</h2>
 
+
       {editHistory.length > 0 ? (
         <ul className="space-y-4">
-            {editHistory.map((history,index) => {
-                 <li key={index} className="p-4 border rounded-md">
-                 <p>Edited On: {new Date(history.editedOn).toLocaleString()}</p>
-                 <p>Edited By: {history.editedBy}</p>
-                 <p>Title: {history.oldTitle}</p>
-                 <p>Content: {history.oldContent}</p>
-                 <p>Tags: {history.oldTags.join(', ')}</p>
-               </li>
-            })}
+            {editHistory.map((history,index) => (
+                <li key={index} className="p-4 border rounded-md">
+                  <p>Edited On: {new Date(history.editedOn).toLocaleString()}</p>
+                  <p>Edited By: {history.editedBy}</p>
+                  <p>Title: {history.oldTitle}</p>
+                  <p>Content: {history.oldContent}</p>
+                  <p>Tags: {history.oldTags.join(', ')}</p>
+                </li>
+            ))}
         </ul>
       ):(
         <p>No edit history available.</p>

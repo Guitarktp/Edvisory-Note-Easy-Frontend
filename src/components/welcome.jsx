@@ -1,5 +1,7 @@
+
 import React from "react";
 import Link from "next/link";
+
 
 const Welcome = () => {
     return (
@@ -31,9 +33,7 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-
     )
-
 }
 
 export default Welcome
