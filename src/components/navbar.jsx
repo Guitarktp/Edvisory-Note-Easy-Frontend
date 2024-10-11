@@ -4,12 +4,13 @@
 import Link from "next/link";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "@/context/userContext";
-// import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
+
 
 
 
 const Navbar = () => {
-    // const router = useRouter();
+    const router = useRouter();
     
   
     const {UserInfo} = useContext(UserContext);
@@ -17,9 +18,11 @@ const Navbar = () => {
   
     const handleLogout = () => {
       localStorage.clear();
-      router.push("/");
-      window.location.reload();
-      
+      router.push("/")
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);  
     };
     
     return (

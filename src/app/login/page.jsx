@@ -4,12 +4,14 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import Link from "next/link";
 import axiosInstance from "@/lib/axiosInstance";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [isShowPassword, setIsShowPassword] = useState(true);
+    const router = useRouter();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -46,8 +48,13 @@ const Login = () => {
             //   icon: "success",
             //   confirmButtonText: "Continue",
             // });
-            // navigate("/");  
-            window.location.reload();
+            router.push("/")
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 50); 
+         
+          
           }
         } catch (error) {
           if (error) {
@@ -96,7 +103,7 @@ const Login = () => {
             
   
             {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
-            {error && errorResponse()}
+            {/* {error && errorResponse()} */}
   
             <button type="submit" className="btn-primary">
               Login

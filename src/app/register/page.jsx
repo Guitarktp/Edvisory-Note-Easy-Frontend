@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import axiosInstance from "@/lib/axiosInstance";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
@@ -15,6 +15,7 @@ const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -63,8 +64,10 @@ const Register = () => {
       if (response.data && response.data.accessToken) {
         localStorage.setItem("token", response.data.accessToken);
         alert("success");
-        navigate("/");
-        window.location.reload();
+        router.push("/")
+        setTimeout(() => {
+          window.location.reload();
+        }, 50);
       }
     } catch (error) {
       // Handle login error
