@@ -77,10 +77,10 @@ export default function Home() {
 
   return (
     <>
-      <NoteCard 
+      {/* <NoteCard 
         title
       
-      />
+      /> */}
      
     </>
   );

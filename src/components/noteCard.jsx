@@ -12,7 +12,7 @@ const NoteCard = ({
   category,
 }) => {
   return (
-    <div>
+    <div className="border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out">
       <div className="flex justify-between">
         <div>
           <h6 className="text-lg font-medium">{title}</h6>
@@ -30,6 +30,21 @@ const NoteCard = ({
           <span className="text-xs text-slate-500">{category}</span>
         </div>
         <MdOutlineHistory className="mt-1 icon-btn" onClick={editHistory} />
+      </div>
+
+      <p className="text-xs text-slate-600 mt-2">{content?.slice(0, 60)}</p>
+
+      <div className="flex items-center justify-between mt-2">
+        <div className="text-xs text-slate-500">
+          {tags.map((item) => `#${item}`)}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <MdCreate
+            className="icon-btn hover:text-green-600"
+            onClick={onEdit}
+          />      
+        </div>
       </div>
     </div>
   );
