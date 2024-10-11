@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import DropdownList from "./Dropdown.jsx";
+import DropdownList from "./dropdown.jsx";
 import axiosInstance from "@/lib/axiosInstance";
 import TagInput from "./tagInput.jsx";
 
