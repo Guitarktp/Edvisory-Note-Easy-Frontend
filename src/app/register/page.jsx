@@ -55,7 +55,7 @@ const Register = () => {
         confirmPassword: confirmPassword,
       });
 
-      // Handle successful registration response
+      
       if (response.data && response.data.error) {
         setError(response.data.message);
         return;
@@ -67,10 +67,10 @@ const Register = () => {
         router.push("/")
         setTimeout(() => {
           window.location.reload();
-        }, 50);
+        }, 10);
       }
     } catch (error) {
-      // Handle login error
+
       if (
         error.response &&
         error.response.data &&
@@ -158,7 +158,7 @@ const Register = () => {
           </div>
 
           {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
-          {error && errorResponse()}
+          {/* {error && errorResponse()} */}
 
           <button type="submit" className="btn-primary">
             Create Account

@@ -42,17 +42,11 @@ const Login = () => {
           if (response.data && response.data.accessToken) {
             localStorage.setItem("token", response.data.accessToken);
             alert("Login Success")
-            // Swal.fire({
-            //   title: "Login Success",
-            //   text: "Click ok button to continue.",
-            //   icon: "success",
-            //   confirmButtonText: "Continue",
-            // });
             router.push("/")
 
             setTimeout(() => {
               window.location.reload();
-            }, 1); 
+            }, 50); 
          
           
           }
