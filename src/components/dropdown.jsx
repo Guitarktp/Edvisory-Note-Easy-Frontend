@@ -2,7 +2,7 @@ const DropdownList = ({categoryList, setCategoryList}) => {
     return (
         <div>
             <select 
-                className="bg-slate-50" 
+                className="border rounded bg-slate-50 hover:bg-blue-500 hover:text-white duration-300" 
                 onChange={(e) => setCategoryList(e.target.value)}
                 value={categoryList}
             >

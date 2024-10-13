@@ -13,7 +13,7 @@ const NoteCard = ({
   category,
 }) => {
   return (
-    <div className="border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out">
+    <div className="border rounded-xl p-4 bg-white hover:shadow-xl transition-all ease-in-out duration-200">
       <div className="flex justify-between">
         <div>
           <h6 className="text-xl font-semibold">{title}</h6>

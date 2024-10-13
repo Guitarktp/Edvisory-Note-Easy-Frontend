@@ -1,11 +1,11 @@
 'use client'
 
 import React from "react";
-import { useState } from "react";
-import { MdClose } from "react-icons/md";
+import { useState,useEffect } from "react";
 import DropdownList from "./dropdown.jsx";
 import axiosInstance from "@/lib/axiosInstance";
 import TagInput from "./tagInput.jsx";
+import { notification } from "antd";
 
 
 
@@ -21,6 +21,15 @@ const AddEditNotes = ({
   const [category, setCategory] = useState(noteData?.category || "personal");
   const [tags, setTags] = useState(noteData?.tags || []);
   const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    setTitle(noteData?.title || "");
+    setContent(noteData?.content || "");
+    setAuthor(noteData?.author || "");
+    setCategory(noteData?.category || "personal");
+    setTags(noteData?.tags || []);
+  }, [noteData]);
 
   const addNewNote = async () => {
     try {
@@ -103,19 +112,30 @@ const AddEditNotes = ({
     setError("");
     if (type === "edit") {
       editNote();
+      if(!error){notification.success({
+        message: "Edit note Successfully",
+      });}
+      
     } else {
       addNewNote();
+      if(!error){notification.success({
+        message: "Add note Successfully",
+      });}
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error",
+        description: error,
+      });
+    } 
+  }, [error]);
+
   return (
     <div className="relative">
-      <button
-        className="w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -right-3 hover:bg-slate-50"
-        onClick={onClose}
-      >
-        <MdClose className="text-xl text-slate-400" />
-      </button>
+      
 
       <div className="flex flex-col gap-2">
         <label className="input-label">TITLE</label>
@@ -166,10 +186,8 @@ const AddEditNotes = ({
         <TagInput tags={tags} setTags={setTags} />
       </div>
 
-      {error && <p className="text-red-500 text-xs pt-4">{error}</p>}
-
       <button
-        className="btn-primary font-medium mt-5 p-3"
+        className="btn-primary font-medium mt-5 p-3 "
         onClick={handleAddNote}
       >
         {type === "add" ? "ADD" : "Update"}

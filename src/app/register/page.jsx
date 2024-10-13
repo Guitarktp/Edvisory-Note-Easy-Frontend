@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import axiosInstance from "@/lib/axiosInstance";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import validateEmail from "@/lib/validate";
+import { notification } from "antd";
 
 const Register = () => {
   const [name, setName] = useState();
@@ -30,10 +31,10 @@ const Register = () => {
       return;
     }
 
-    // if (!validateEmail(email)) {
-    //   setError("Please enter a valid email address (ex.@).");
-    //   return;
-    // }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address (ex.@).");
+      return;
+    }
 
     if (!password) {
       setError("Please enter your password");
@@ -63,11 +64,14 @@ const Register = () => {
 
       if (response.data && response.data.accessToken) {
         localStorage.setItem("token", response.data.accessToken);
-        alert("success");
+        notification.success({
+          message: 'Register Successfully',
+        });    
+          
         router.push("/")
         setTimeout(() => {
           window.location.reload();
-        }, 10);
+        }, 500); 
       }
     } catch (error) {
 
@@ -92,6 +96,15 @@ const Register = () => {
     e.preventDefault();
     setIsShowConfirmPassword(!isShowConfirmPassword);
   };
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Registor Error",
+        description: error,
+      });
+    }
+  }, [error]);
 
   return (
     <div className="flex items-center justify-center mt-28">
@@ -156,9 +169,7 @@ const Register = () => {
               />
             )}
           </div>
-
-          {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
-          {/* {error && errorResponse()} */}
+          
 
           <button type="submit" className="btn-primary">
             Create Account
@@ -166,7 +177,7 @@ const Register = () => {
 
           <p className="text-sm text-center mt-4">
             Already have an account?{" "}
-            <Link href="/login" className="font-medium text-primary underline">
+            <Link href="/login" className="font-medium text-blue-500 underline ">
               Login
             </Link>
           </p>

@@ -5,18 +5,17 @@ import Welcome from "@/components/welcome";
 import { useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import axiosInstance from "@/lib/axiosInstance";
-import ReactModal from "react-modal";
 import NoteCard from "@/components/noteCard";
 import AddEditNotes from "@/components/addEditNotes";
 import EmptyCard from "@/components/emptyCard";
 import NoteEditHistory from "@/components/history";
 import SortButton from "@/components/sortButton";
+import { Modal } from "antd";
 
 export default function Home() {
   const [allNotes, setAllNotes] = useState([]);
   const [hasToken, setHasToken] = useState(false);
   const [sortOption, setSortOption] = useState("dateDesc");
-
 
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
@@ -42,7 +41,6 @@ export default function Home() {
 
   const sortNotes = (notes, option) => {
     const sortedNotes = [...notes];
-    
 
     if (option === "dateAsc") {
       sortedNotes.sort((a, b) => new Date(a.createdOn) - new Date(b.createdOn));
@@ -64,50 +62,47 @@ export default function Home() {
       data: noteData,
       type: "edit",
     });
-    
   };
-
 
   const handleHistory = async (noteData) => {
     const noteId = noteData._id;
     try {
-      const response = await axiosInstance.get("/features/get-note-by-id/" + noteId)
-      setOpenEditHistoryModal({isShown: true, data: response.data.editHistory})
+      const response = await axiosInstance.get(
+        "/features/get-note-by-id/" + noteId
+      );
+      setOpenEditHistoryModal({
+        isShown: true,
+        data: response.data.noteInfo.editHistory,
+      });
     } catch (error) {
       console.log("Error fetching edit history:", error);
     }
-    
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setHasToken(true); 
+      setHasToken(true);
       getAllNotes();
       console.log("get token success");
     } else {
-      
     }
     return () => {};
   }, []);
 
- 
-
   return (
-    <div className="container mx-auto">
-
+    <div className="container mx-auto px-24 ">
       {hasToken && (
-        <SortButton 
+        <SortButton
           sortOption={sortOption}
           setSortOption={(e) => setSortOption(e.target.value)}
         />
-
       )}
 
       {/* แสดง note card */}
       {hasToken ? (
         allNotes.length > 0 ? (
-          <div className="grid grid-cols-3 gap-4 mt-8">
+          <div className="grid md:grid-cols-3 gap-4 mt-8 ">
             {/* เอา parameter จาก stateข้างบน มาใช้ */}
             {sortNotes(allNotes, sortOption).map((item) => (
               <NoteCard
@@ -133,62 +128,45 @@ export default function Home() {
         <Welcome />
       )}
 
-
       {/* ปุ่มเพิ่ม note */}
       {hasToken && (
         <button
-          className="w-16 h-16 flex items-center justify-center rounded-2xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10"
+          className="w-36 h-16 flex items-center justify-center rounded-2xl bg-blue-500 hover:bg-blue-600 fixed right-10 bottom-10 duration-300"
           onClick={() => {
-            setOpenAddEditModal({ isShown: true, type:"add", data: null });
+            setOpenAddEditModal({ isShown: true, type: "add", data: null });
           }}
         >
           <MdAdd className="text-[32px] text-white" />
+          <p className="text-white font-semibold">New note</p>
         </button>
       )}
 
-
       {/* เปิดหน้า add and edit note */}
-      <ReactModal
-        isOpen={openAddEditModal.isShown}
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0,0,0,0.2)",
-          },
-        }}
-        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 "
+      <Modal
+        open={openAddEditModal.isShown}
+        onCancel={() => setOpenAddEditModal({ isShown: false, data: null })}
+        footer={null}
+        title={openAddEditModal.type === "add" ? "Add Note" : "Edit Note"}
       >
         <AddEditNotes
           type={openAddEditModal.type}
           noteData={openAddEditModal.data}
-          onClose={() => {
-            setOpenAddEditModal({ isShown: false, data: null });
-          }}
+          onClose={() => setOpenAddEditModal({ isShown: false, data: null })}
           getAllNotes={getAllNotes}
         />
-      </ReactModal>
+      </Modal>
+
 
       {/* เปิดหน้า show edit history */}
-      <ReactModal
-        isOpen={openEditHistoryModal.isShown} 
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0,0,0,0.2)",
-          },
-          content: {
-            maxHeight: '75vh', 
-            overflowY: 'auto',  
-          },
-        }}
-        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 "
+
+      <Modal
+        open={openEditHistoryModal.isShown}
+        onCancel={() => setOpenEditHistoryModal({ isShown: false, data: [] })}
+        footer={null}
+        title="Edit History"
       >
-        <NoteEditHistory 
-          onClose={() => {
-            setOpenEditHistoryModal({ isShown: false, data: [] });
-          }}
-          editHistory={openEditHistoryModal.data }
-          
-        />
-      </ReactModal>
+        <NoteEditHistory editHistory={openEditHistoryModal.data} />
+      </Modal>
     </div>
   );
 }

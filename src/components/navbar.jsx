@@ -1,6 +1,4 @@
 "use client";
-
-
 import Link from "next/link";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "@/context/userContext";
@@ -27,15 +25,15 @@ const Navbar = () => {
     
     return (
       <div className="bg-white flex items-center justify-between px-6 py-2 drop-shadow">
-        <h2 className="text-xl font-medium text-black py-2">
+        <h2 className="text-xl font-bold text-black py-2 ">
           <Link href="/">NoteEasy</Link>
         </h2>
         {/* <ul className="flex-grow text-center"> */}
   
         {UserInfo ? (
-          <ul className="flex gap-5">
-            <li className="flex   ">
-              <p className="mr-1">Welcome, </p>
+          <ul className="md:flex gap-5">
+            <li className="md:flex   ">
+              <p className="mr-1 max-sm:hidden">Welcome, </p>
               <p className="text-blue-600 font-semibold">{UserInfo.userName}</p>
             </li>
             
