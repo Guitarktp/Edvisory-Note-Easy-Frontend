@@ -6,11 +6,11 @@ const DropdownList = ({categoryList, setCategoryList}) => {
                 onChange={(e) => setCategoryList(e.target.value)}
                 value={categoryList}
             >
-                <option value="personal">Personal</option>
-                <option value="work">Work</option>
-                <option value="study">Study</option>
-                <option value="ideas">Ideas</option>
-                <option value="reminders">Reminders</option>
+                <option value="Personal">Personal</option>
+                <option value="Work">Work</option>
+                <option value="Study">Study</option>
+                <option value="Ideas">Ideas</option>
+                <option value="Reminders">Reminders</option>
             </select>
         </div>
     )

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInstance";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import validateEmail from "@/lib/validate";
 import { notification } from "antd";
+import { UserContext } from "@/context/userContext";
 
 const Register = () => {
   const [name, setName] = useState();
@@ -17,6 +18,7 @@ const Register = () => {
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const {register} = useContext(UserContext);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -63,15 +65,12 @@ const Register = () => {
       }
 
       if (response.data && response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
+        await register(response.data.accessToken);
         notification.success({
           message: 'Register Successfully',
         });    
           
         router.push("/")
-        setTimeout(() => {
-          window.location.reload();
-        }, 500); 
       }
     } catch (error) {
 

@@ -103,7 +103,6 @@ export default function Home() {
       {hasToken ? (
         allNotes.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-4 mt-8 ">
-            {/* เอา parameter จาก stateข้างบน มาใช้ */}
             {sortNotes(allNotes, sortOption).map((item) => (
               <NoteCard
                 key={item._id}
@@ -133,7 +132,7 @@ export default function Home() {
         <button
           className="w-36 h-16 flex items-center justify-center rounded-2xl bg-blue-500 hover:bg-blue-600 fixed right-10 bottom-10 duration-300"
           onClick={() => {
-            setOpenAddEditModal({ isShown: true, type: "add", data: null });
+            setOpenAddEditModal({ isShown: true, type: "add", data: [] });
           }}
         >
           <MdAdd className="text-[32px] text-white" />
@@ -155,7 +154,6 @@ export default function Home() {
           getAllNotes={getAllNotes}
         />
       </Modal>
-
 
       {/* เปิดหน้า show edit history */}
 

@@ -28,7 +28,7 @@ const Navbar = () => {
         <h2 className="text-xl font-bold text-black py-2 ">
           <Link href="/">NoteEasy</Link>
         </h2>
-        {/* <ul className="flex-grow text-center"> */}
+        
   
         {UserInfo ? (
           <ul className="md:flex gap-5">
@@ -42,7 +42,7 @@ const Navbar = () => {
             
             <li>
               <button
-                // className="hover:bg-black hover:rounded-full hover:p-2 hover:text-white duration-300 font-semibold"
+                
                 className="hover:bg-black hover:rounded-full hover:px-2 hover:text-white duration-300 font-semibold text-red-500"
                 onClick={handleLogout}
               >

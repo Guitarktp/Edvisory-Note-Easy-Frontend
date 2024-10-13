@@ -3,10 +3,11 @@
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import Link from "next/link";
 import axiosInstance from "@/lib/axiosInstance";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import validateEmail from "@/lib/validate";
 import { notification } from "antd";
+import { UserContext } from "@/context/userContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const { login } = useContext(UserContext);
 
 
   const handleLogin = async (e) => {
@@ -41,15 +43,12 @@ const Login = () => {
       });
 
       if (response.data && response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
+        await login(response.data.accessToken);
         notification.success({
           message: "Login Successfully",
         });
 
         router.push("/");
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
       }
     } catch (error) {
       setError("Invalid email or password. Please try again");

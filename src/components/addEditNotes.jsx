@@ -1,27 +1,19 @@
-'use client'
+"use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import DropdownList from "./dropdown.jsx";
 import axiosInstance from "@/lib/axiosInstance";
 import TagInput from "./tagInput.jsx";
 import { notification } from "antd";
 
-
-
-const AddEditNotes = ({
-  noteData,
-  type,
-  onClose,
-  getAllNotes,
-}) => {
+const AddEditNotes = ({ noteData, type, onClose, getAllNotes }) => {
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
   const [author, setAuthor] = useState(noteData?.author || "");
   const [category, setCategory] = useState(noteData?.category || "personal");
   const [tags, setTags] = useState(noteData?.tags || []);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     setTitle(noteData?.title || "");
@@ -41,7 +33,6 @@ const AddEditNotes = ({
         tags,
       });
 
-      // if (response.data && response.data.noteInfo) {
       if (response.data) {
         getAllNotes();
         onClose();
@@ -75,7 +66,6 @@ const AddEditNotes = ({
       );
 
       if (response.data && response.data.noteInfo) {
-        
         getAllNotes();
         onClose();
       }
@@ -112,15 +102,18 @@ const AddEditNotes = ({
     setError("");
     if (type === "edit") {
       editNote();
-      if(!error){notification.success({
-        message: "Edit note Successfully",
-      });}
-      
+      if (!error) {
+        notification.success({
+          message: "Edit note Successfully",
+        });
+      }
     } else {
       addNewNote();
-      if(!error){notification.success({
-        message: "Add note Successfully",
-      });}
+      if (!error) {
+        notification.success({
+          message: "Add note Successfully",
+        });
+      }
     }
   };
 
@@ -130,13 +123,11 @@ const AddEditNotes = ({
         message: "Error",
         description: error,
       });
-    } 
+    }
   }, [error]);
 
   return (
     <div className="relative">
-      
-
       <div className="flex flex-col gap-2">
         <label className="input-label">TITLE</label>
         <input
@@ -148,9 +139,8 @@ const AddEditNotes = ({
         />
       </div>
 
-
       <div className="flex flex-col gap-2 mt-4">
-        <label className="input-label">Author</label>
+        <label className="input-label">AUTHOR</label>
         <input
           type="text"
           className="text-2xl text-slate-950 outline-none"
@@ -172,13 +162,9 @@ const AddEditNotes = ({
         />
       </div>
 
-
       <div className="flex flex-col gap-2 mt-4">
-        <label className="input-label">Category</label>
-        <DropdownList 
-          categoryList={category}
-          setCategoryList={setCategory}  
-        />
+        <label className="input-label">CATEGORY</label>
+        <DropdownList categoryList={category} setCategoryList={setCategory} />
       </div>
 
       <div className="mt-3">

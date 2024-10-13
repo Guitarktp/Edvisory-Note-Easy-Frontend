@@ -32,7 +32,7 @@ const NoteCard = ({
             <span className="text-xs text-slate-500">{category}</span>
           
         </div>
-        <MdOutlineHistory className="mt-1 icon-btn" onClick={editHistory} />
+        <MdOutlineHistory className="mt-1 icon-btn duration-300" onClick={editHistory} />
       </div>
 
       <p className="text-xs text-slate-600 mt-2">{content?.slice(0, 60)}</p>
@@ -44,7 +44,7 @@ const NoteCard = ({
 
         <div className="flex items-center gap-2">
           <MdCreate
-            className="icon-btn hover:text-green-600"
+            className="icon-btn hover:text-green-600 duration-300"
             onClick={onEdit}
           />      
         </div>
