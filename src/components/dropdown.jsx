@@ -2,15 +2,15 @@ const DropdownList = ({categoryList, setCategoryList}) => {
     return (
         <div>
             <select 
-                className="bg-slate-50" 
+                className="border rounded bg-slate-50 hover:bg-blue-500 hover:text-white duration-300" 
                 onChange={(e) => setCategoryList(e.target.value)}
                 value={categoryList}
             >
-                <option value="personal">Personal</option>
-                <option value="work">Work</option>
-                <option value="study">Study</option>
-                <option value="ideas">Ideas</option>
-                <option value="reminders">Reminders</option>
+                <option value="Personal">Personal</option>
+                <option value="Work">Work</option>
+                <option value="Study">Study</option>
+                <option value="Ideas">Ideas</option>
+                <option value="Reminders">Reminders</option>
             </select>
         </div>
     )

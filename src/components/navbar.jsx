@@ -1,6 +1,4 @@
 "use client";
-
-
 import Link from "next/link";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "@/context/userContext";
@@ -10,12 +8,14 @@ import { useRouter } from "next/navigation";
 
 
 const Navbar = () => {
-    const router = useRouter();
-    
+
+ 
+
   
     const {UserInfo} = useContext(UserContext);
+
+    const router = useRouter()
    
-  
     const handleLogout = () => {
       localStorage.clear();
       router.push("/")
@@ -27,15 +27,15 @@ const Navbar = () => {
     
     return (
       <div className="bg-white flex items-center justify-between px-6 py-2 drop-shadow">
-        <h2 className="text-xl font-medium text-black py-2">
+        <h2 className="text-xl font-bold text-black py-2 ">
           <Link href="/">NoteEasy</Link>
         </h2>
-        {/* <ul className="flex-grow text-center"> */}
+        
   
         {UserInfo ? (
-          <ul className="flex gap-5">
-            <li className="flex   ">
-              <p className="mr-1">Welcome, </p>
+          <ul className="md:flex gap-5">
+            <li className="md:flex   ">
+              <p className="mr-1 max-sm:hidden">Welcome, </p>
               <p className="text-blue-600 font-semibold">{UserInfo.userName}</p>
             </li>
             
@@ -44,7 +44,7 @@ const Navbar = () => {
             
             <li>
               <button
-                // className="hover:bg-black hover:rounded-full hover:p-2 hover:text-white duration-300 font-semibold"
+                
                 className="hover:bg-black hover:rounded-full hover:px-2 hover:text-white duration-300 font-semibold text-red-500"
                 onClick={handleLogout}
               >

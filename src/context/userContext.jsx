@@ -1,30 +1,47 @@
-'use client'
+"use client";
 
-import { createContext, useState, useEffect } from 'react';
-import axiosInstance from '@/lib/axiosInstance';
+import { createContext, useState, useEffect } from "react";
+import axiosInstance from "@/lib/axiosInstance";
 
+const UserContext = createContext();
 
-export const UserContext = createContext();
-
-// UserProvider.js
-export const UserProvider = ({ children }) => {
+const UserProvider = ({ children }) => {
   const [userGlobal, setUserGlobal] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
         const API = await axiosInstance.get("/users/get-user");
-        setUserGlobal(API.data.user); // แก้ไขเพื่อให้ตรงกับโครงสร้างข้อมูล
-      } catch (error) {
-        console.error("Error decoding token or fetching user data:", error);
+        setUserGlobal(API.data.user);
+      } else {
+        setUserGlobal(null);
       }
-    };
+    } catch (error) {
+      console.log("Error decoding token or fetching user data:");
+      setUserGlobal(null);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, []);
 
+  const login = async (token) => {
+    localStorage.setItem("token", token);
+    await fetchUserData();
+  };
+
+  const register = async (token) => {
+    localStorage.setItem("token", token);
+    await fetchUserData();
+  }
+
   return (
-    <UserContext.Provider value={{UserInfo: userGlobal, setUserGlobal}}>
+    <UserContext.Provider value={{ UserInfo: userGlobal, setUserGlobal, login, register }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+export { UserContext, UserProvider };

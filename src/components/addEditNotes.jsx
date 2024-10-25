@@ -1,26 +1,28 @@
-'use client'
+"use client";
 
 import React from "react";
-import { useState } from "react";
-import { MdClose } from "react-icons/md";
+import { useState, useEffect } from "react";
 import DropdownList from "./dropdown.jsx";
 import axiosInstance from "@/lib/axiosInstance";
 import TagInput from "./tagInput.jsx";
+import { notification } from "antd";
 
-
-
-const AddEditNotes = ({
-  noteData,
-  type,
-  onClose,
-  getAllNotes,
-}) => {
+const AddEditNotes = ({ noteData, type, onClose, getAllNotes }) => {
+  
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
   const [author, setAuthor] = useState(noteData?.author || "");
   const [category, setCategory] = useState(noteData?.category || "personal");
   const [tags, setTags] = useState(noteData?.tags || []);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setTitle(noteData?.title || "");
+    setContent(noteData?.content || "");
+    setAuthor(noteData?.author || "");
+    setCategory(noteData?.category || "personal");
+    setTags(noteData?.tags || []);
+  }, [noteData]);
 
   const addNewNote = async () => {
     try {
@@ -32,7 +34,6 @@ const AddEditNotes = ({
         tags,
       });
 
-      // if (response.data && response.data.noteInfo) {
       if (response.data) {
         getAllNotes();
         onClose();
@@ -66,7 +67,6 @@ const AddEditNotes = ({
       );
 
       if (response.data && response.data.noteInfo) {
-        
         getAllNotes();
         onClose();
       }
@@ -103,20 +103,32 @@ const AddEditNotes = ({
     setError("");
     if (type === "edit") {
       editNote();
+      if (!error) {
+        notification.success({
+          message: "Edit note Successfully",
+        });
+      }
     } else {
       addNewNote();
+      if (!error) {
+        notification.success({
+          message: "Add note Successfully",
+        });
+      }
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error",
+        description: error,
+      });
+    }
+  }, [error]);
+
   return (
     <div className="relative">
-      <button
-        className="w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -right-3 hover:bg-slate-50"
-        onClick={onClose}
-      >
-        <MdClose className="text-xl text-slate-400" />
-      </button>
-
       <div className="flex flex-col gap-2">
         <label className="input-label">TITLE</label>
         <input
@@ -124,19 +136,18 @@ const AddEditNotes = ({
           className="text-2xl text-slate-950 outline-none"
           placeholder="Add your title"
           value={title}
-          onChange={({ target }) => setTitle(target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
-
       <div className="flex flex-col gap-2 mt-4">
-        <label className="input-label">Author</label>
+        <label className="input-label">AUTHOR</label>
         <input
           type="text"
           className="text-2xl text-slate-950 outline-none"
           placeholder="Add your name"
           value={author}
-          onChange={({ target }) => setAuthor(target.value)}
+          onChange={(e) => setAuthor(e.target.value)}
         />
       </div>
 
@@ -148,17 +159,13 @@ const AddEditNotes = ({
           placeholder="Content"
           rows={10}
           value={content}
-          onChange={({ target }) => setContent(target.value)}
+          onChange={(e) => setContent(e.target.value)}
         />
       </div>
 
-
       <div className="flex flex-col gap-2 mt-4">
-        <label className="input-label">Category</label>
-        <DropdownList 
-          categoryList={category}
-          setCategoryList={setCategory}  
-        />
+        <label className="input-label">CATEGORY</label>
+        <DropdownList categoryList={category} setCategoryList={setCategory} />
       </div>
 
       <div className="mt-3">
@@ -166,10 +173,8 @@ const AddEditNotes = ({
         <TagInput tags={tags} setTags={setTags} />
       </div>
 
-      {error && <p className="text-red-500 text-xs pt-4">{error}</p>}
-
       <button
-        className="btn-primary font-medium mt-5 p-3"
+        className="btn-primary font-medium mt-5 p-3 "
         onClick={handleAddNote}
       >
         {type === "add" ? "ADD" : "Update"}
